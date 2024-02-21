@@ -36,19 +36,23 @@ export default class FuncionarioDAO{
     async consultar(termo){
        
         let parametros=[];
-      
+        let valores;
         var condicao="";
-         if(!isNaN(termo)){
-                condicao = " func_nome LIKE "
+        if(!isNaN(parseFloat(termo)) && isFinite(termo)){
+            condicao = " func_codigo = "
+            valores = [termo];
          }
         else{
-                condicao = " func_codigo = "
+             
+                condicao = " func_nome LIKE "
+                valores = ['%' + termo +'%'];
         }
         const conexao = await conectar();
-        const sql = "SELECT a.func_codigo, a.func_nome, a.func_cargo, a.func_salario, a.func_dataAdmissao , b.dept_nome  FROM funcionario a INNER JOIN departamento b ON func_departamento = dept_codigo ORDER BY func_nome";
-        const [registros, campos] = await conexao.execute(sql,parametros);
-        const valores = ['%' + termo +'%'];
+        const sql = "SELECT a.func_codigo, a.func_nome, a.func_cargo, a.func_salario, a.func_dataAdmissao , b.dept_nome  FROM funcionario a INNER JOIN departamento b ON func_departamento = dept_codigo WHERE "+condicao+" ? ORDER BY func_nome";
+      
+        console.log(sql);
         const [rows] = await conexao.query(sql,valores);
+      
         let listaFuncionarios = [];
 
         for(const row of rows){

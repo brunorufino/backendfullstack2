@@ -48,16 +48,20 @@ export default class DepartamentoDAO {
    async consultar(termo){
 
     var condicao="";
-    if(!isNaN(termo)){
-        condicao = "dept_nome LIKE "
+    let valores;
+
+    if (!isNaN(parseFloat(termo)) && isFinite(termo)){
+        condicao = " dept_codigo = "
+        valores = [termo];
     }
     else{
-        condicao = "dept_codigo = "
+        condicao = " dept_nome LIKE "
+        valores = ['%' + termo +'%'];
     }
 
     const conexao = await conectar();
     const sql = "SELECT * FROM departamento WHERE "+condicao+" ? ORDER BY dept_nome";
-    const valores = ['%' + termo +'%'];
+    console.log(sql);
     const [rows] = await conexao.query(sql,valores);
     const listaDep = [];
 
