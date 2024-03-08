@@ -1,4 +1,7 @@
 import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 export default async function conectar(){
     if (global.poolConexoes){
@@ -6,13 +9,13 @@ export default async function conectar(){
     }
     else{
         const pool = mysql.createPool({
-            host: '129.146.68.51',
-            user: 'adm', 
-            password:'teste9999',  
+            host: process.env.HOST,
+            user: process.env.USUARIO_BD, 
+            password: process.env.SENHA_BD,  
            // host: 'localhost',
             //user: 'root', 
             //password:'',  
-            database: 'escola',
+            database: process.env.DATABASE,
             waitForConnections: true,
             connectionLimit: 10,
             maxIdle: 10, // max idle connections, the default value is the same as `connectionLimit`

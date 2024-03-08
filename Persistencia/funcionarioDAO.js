@@ -52,7 +52,7 @@ export default class FuncionarioDAO{
       
         console.log(sql);
         const [rows] = await conexao.query(sql,valores);
-      
+        global.poolConexoes.releaseConnection(conexao);
         let listaFuncionarios = [];
 
         for(const row of rows){

@@ -63,6 +63,7 @@ export default class DepartamentoDAO {
     const sql = "SELECT * FROM departamento WHERE "+condicao+" ? ORDER BY dept_nome";
     console.log(sql);
     const [rows] = await conexao.query(sql,valores);
+    global.poolConexoes.releaseConnection(conexao);
     const listaDep = [];
 
     for(const row of rows){
