@@ -20,13 +20,11 @@ export default class FuncionarioCtrl {
 
             const objDepartamento = new Departamento(departamento.codigo);
 
-        
-
             const dependentes = [];
             for (const dependente of dependenteFuncionario) {
 
                     
-                    const dep = new Dependente(dependente.codigo,"Ana",20,'S');
+                    const dep = new Dependente(dependente.codigo);
 
                     const objDependenteFuncionario = new DependenteFuncionario(dep,dependente.parentesco);
  
@@ -34,14 +32,6 @@ export default class FuncionarioCtrl {
                     
             }
 
-           // console.log(dependentes);
-
-          /*  dependentes.forEach(depi => {
-                    console.log(depi.dependente.codigo)
-                    console.log(depi.dependente.nome)
-            });
-            */
-         
             const funcionario = new Funcionario(0,nome,cargo,salario,dataAdmissao,objDepartamento,dependentes);
             
                 //resolver a promise
@@ -77,9 +67,20 @@ export default class FuncionarioCtrl {
             const salario = dados.salario;
             const dataAdmissao = dados.dataAdmissao;
             const departamento = dados.departamento;
+            const dependenteFuncionario = dados.dependentes;
 
-            if (codigo > 0 && nome && cargo && salario > 0 && dataAdmissao && departamento > 0) {
-                const funcionario = new Funcionario(codigo,nome,cargo,salario,dataAdmissao,departamento);
+
+            const objDepartamento = new Departamento(departamento.codigo);
+
+            const dependentes = [];
+            for (const dependente of dependenteFuncionario) {
+                    const dep = new Dependente(dependente.codigo);
+                    const objDependenteFuncionario = new DependenteFuncionario(dep,dependente.parentesco);
+                    dependentes.push(objDependenteFuncionario);
+            }
+
+            const funcionario = new Funcionario(codigo,nome,cargo,salario,dataAdmissao,objDepartamento,dependentes);
+            
                 //resolver a promise
                 funcionario.atualizar().then(() => {
                     resposta.status(200).json({
@@ -93,13 +94,6 @@ export default class FuncionarioCtrl {
                             "mensagem": "Erro ao alterar o funcionário:" + erro.message
                         });
                     });
-            }
-            else {
-                resposta.status(400).json({
-                    "status": false,
-                    "mensagem": "Por favor, informe todos os campos, qualquer dúvida consulte a documentação da API!"
-                });
-            }
         }
         else {
             resposta.status(400).json({
