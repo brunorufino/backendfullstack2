@@ -85,7 +85,8 @@ export default class Funcionario {
             cargo:this.#func_cargo,
             salario:this.#func_salario,
             dataAdmissao:this.#func_dataAdmissao,
-            departamento:this.#func_departamento
+            departamento:this.#func_departamento,
+            dependentes: this.#dependentes
         }
     }
 

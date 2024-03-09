@@ -30,7 +30,13 @@ export default class Dependente {
         this.#dep_nome = novoNome;
     }
 
+    get idade(){
+        return this.#dep_idade;
+    }
  
+    get sexo(){
+        return this.#dep_sexo;
+    }
 
     // Override do método toJSON
 
