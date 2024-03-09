@@ -1,0 +1,45 @@
+export default class Dependente {
+
+    #dep_codigo;
+    #dep_nome;
+    #dep_idade;
+    #dep_sexo;
+
+    constructor(codigo=0, nome="", idade=0, sexo="") {
+        this.#dep_codigo = codigo;
+        this.#dep_nome = nome;
+        this.#dep_idade=idade;
+        this.#dep_sexo = sexo;
+    }
+
+    // Métodos de acesso públicos
+
+    get codigo() {
+        return this.#dep_codigo;
+    }
+
+    set codigo(novoCodigo) {
+        this.#dep_codigo = novoCodigo;
+    }
+
+    get nome() {
+        return this.#dep_nome;
+    }
+
+    set nome(novoNome) {
+        this.#dep_nome = novoNome;
+    }
+
+ 
+
+    // Override do método toJSON
+
+    toJSON() {
+        return {
+            codigo: this.#dep_codigo,
+            nome: this.#dep_nome,
+            idade: this.#dep_idade,
+            sexo: this.#dep_sexo
+        };
+    }
+}

@@ -8,14 +8,16 @@ export default class Funcionario {
     #func_salario;
     #func_dataAdmissao;
     #func_departamento;
+    #dependentes;
 
-    constructor(codigo=0, nome="",cargo="",salario=0.00,dataAdmissao='10/10/1990', departamento ){
+    constructor(codigo=0, nome="",cargo="",salario=0.00,dataAdmissao='10/10/1990', departamento, dependentes ){
         this.#func_codigo = codigo;
         this.#func_nome = nome;
         this.#func_cargo = cargo;
         this.#func_salario = salario;
         this.#func_dataAdmissao = dataAdmissao;
         this.#func_departamento = departamento;
+        this.#dependentes = dependentes;
     }
 
     //métodos de acesso públicos
@@ -69,6 +71,11 @@ export default class Funcionario {
         this.#func_departamento = novoDepartamento;
     }
 
+    get dependentes(){
+        return this.#dependentes;
+    }
+
+    
     //override do método toJSON
     toJSON()     
     {

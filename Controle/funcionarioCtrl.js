@@ -1,3 +1,6 @@
+import Departamento from "../Modelo/departamento.js";
+import Dependente from "../Modelo/dependente.js";
+import DependenteFuncionario from "../Modelo/dependenteFuncionario.js";
 import Funcionario from "../Modelo/funcionario.js";
 
 export default class FuncionarioCtrl {
@@ -12,9 +15,35 @@ export default class FuncionarioCtrl {
             const salario = dados.salario;
             const dataAdmissao = dados.dataAdmissao;
             const departamento = dados.departamento;
-           
-            if (nome && cargo && salario > 0 && dataAdmissao && departamento) {
-                const funcionario = new Funcionario(0,nome,cargo,salario,dataAdmissao,departamento);
+            const dependenteFuncionario = dados.dependentes;
+
+
+            const objDepartamento = new Departamento(departamento.codigo);
+
+        
+
+            const dependentes = [];
+            for (const dependente of dependenteFuncionario) {
+
+                    
+                    const dep = new Dependente(dependente.codigo,"Ana",20,'S');
+
+                    const objDependenteFuncionario = new DependenteFuncionario(dep,dependente.parentesco);
+ 
+                    dependentes.push(objDependenteFuncionario);
+                    
+            }
+
+           // console.log(dependentes);
+
+          /*  dependentes.forEach(depi => {
+                    console.log(depi.dependente.codigo)
+                    console.log(depi.dependente.nome)
+            });
+            */
+         
+            const funcionario = new Funcionario(0,nome,cargo,salario,dataAdmissao,objDepartamento,dependentes);
+            
                 //resolver a promise
                 funcionario.gravar().then(() => {
                     resposta.status(200).json({
@@ -29,13 +58,6 @@ export default class FuncionarioCtrl {
                             "mensagem": "Erro ao cadastrado o funcionário:" + erro.message
                         });
                     });
-            }
-            else {
-                resposta.status(400).json({
-                    "status": false,
-                    "mensagem": "Por favor, informe todos os campos, qualquer dúvida consulte a documentação da API!"
-                });
-            }
         }
         else {
             resposta.status(400).json({
