@@ -1,3 +1,5 @@
+import DependenteDAO from "../Persistencia/dependenteDAO.js";
+
 export default class Dependente {
 
     #dep_codigo;
@@ -48,4 +50,24 @@ export default class Dependente {
             sexo: this.#dep_sexo
         };
     }
+
+    async gravar(){
+        const depDAO = new DependenteDAO();
+        await depDAO.gravar(this);
+     }
+ 
+     async excluir(){
+        const depDAO = new DependenteDAO();
+        await depDAO.excluir(this);
+     }
+ 
+     async alterar(){
+        const depDAO = new DependenteDAO();
+        await depDAO.atualizar(this);
+     }
+ 
+     async consultar(termo){
+        const depDAO = new DependenteDAO();
+        return await depDAO.consultar(termo);
+     }
 }

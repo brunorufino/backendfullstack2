@@ -75,18 +75,6 @@ export default class FuncionarioDAO{
         }
     }
 
-    /*
-    async excluir(funcionario){
-        if (funcionario instanceof Funcionario){
-            const sql = "DELETE FROM funcionario WHERE func_codigo = ?"; 
-            const parametros = [funcionario.codigo];
-            const conexao = await conectar(); 
-            await conexao.execute(sql,parametros); 
-            global.poolConexoes.releaseConnection(conexao);
-        }
-    }
-    */
-
     async excluir(funcionario) {
         if (funcionario instanceof Funcionario) {
             const conexao = await conectar();
